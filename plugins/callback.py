@@ -2,10 +2,12 @@ from datetime import datetime
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
                             InlineKeyboardMarkup, CallbackQuery)
 from pyrogram import Client, filters
+from config import IS_USER_ALLOWED_TO_CHANGE_LANGUAGE
 
 from database.users import delete_user, expiry_date, get_user, is_user_verified, update_user_info
-from helpers import get_user_info_button, human_time, temp, translate
+from helpers import get_serial_language, get_user_info_button, get_user_info_text, human_time, temp, translate, user_allowed_langauage
 from translation import Script
+from database import db 
 
 @Client.on_callback_query(filters.regex('^changelang'))
 async def changelang_cb(c, m: CallbackQuery):
@@ -17,6 +19,8 @@ async def changelang_cb(c, m: CallbackQuery):
 async def change_validity_cb(c, m: CallbackQuery):
     _, user_id, time_in_s = m.data.split("#")
     await update_user_info(user_id, {"has_access":True, "access_days":int(time_in_s), "last_verified":datetime.now()})
+    text = await get_user_info_text(user_id)
+    await m.edit_message_text(text, reply_markup=m.message.reply_markup)
     await m.answer("Updated Successfully", show_alert=True)
 
 @Client.on_callback_query(filters.regex('^deleteuser'))
@@ -31,11 +35,13 @@ async def removeaccess_cb(c, m: CallbackQuery):
     _, user_id = m.data.split("#")
     user_id = int(user_id)
     await update_user_info(user_id=user_id, value={"has_access": False,"last_verified":datetime(1970,1,1), "access_days":0})
+    text = await get_user_info_text(user_id)
+    await m.edit_message_text(text, reply_markup=m.message.reply_markup)
     await m.answer("Access has been removed", show_alert=True)
 
 @Client.on_callback_query(filters.regex('^allowlang'))
 async def allowlang_cb(c, m: CallbackQuery):
-    _, user_id, serial_lang = m.data.split("#")
+    _, user_id, serial_lang, ident = m.data.split("#")
     user = await get_user(user_id)
     allowed_lang = user['allowed_languages']
 
@@ -45,9 +51,15 @@ async def allowlang_cb(c, m: CallbackQuery):
         allowed_lang.append(serial_lang) if serial_lang not in allowed_lang else allowed_lang
 
     await update_user_info(user_id, {"allowed_languages":allowed_lang})
-    btn = await get_user_info_button(m.from_user.id)
-    if m.from_user.id in temp.ADMINS_LIST:
-        await m.edit_message_reply_markup(InlineKeyboardMarkup(btn))
+    
+    if ident == "serial_lang":
+        text, btn = await get_serial_language(user_id)
+        await m.edit_message_text(text, reply_markup=InlineKeyboardMarkup(btn))
+        return 
+
+    btn = await get_user_info_button(user_id)
+    text = await get_user_info_text(user_id)
+    await m.edit_message_text(text, reply_markup=InlineKeyboardMarkup(btn))
     await m.answer("Updated Successfully", show_alert=True)
 
 @Client.on_callback_query(filters.regex('^delete$'))
