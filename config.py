@@ -31,5 +31,5 @@ REPLIT_APP_NAME = os.environ.get("REPLIT_APP_NAME", None)
 REPLIT = f"https://{REPLIT_APP_NAME.lower()}.{REPLIT_USERNAME}.repl.co" if REPLIT_APP_NAME and REPLIT_USERNAME else False
 PING_INTERVAL = int(os.environ.get("PING_INTERVAL", "300"))
 
-VOOT_API_URL = "https://psapi.voot.com/jio/voot/v1/voot-web/content/generic/series-wise-episode_curated?id=include%3A{show_id}&sort=episode%3Adesc&responseType=common"
+VOOT_API_URL = "https://psapi.voot.com/jio/voot/v1/voot-web/content/generic/series-wise-episode?sort=episode%3Adesc&id={show_id}&responseType=common"
 ZEE5_API_URL = "https://gwapi.zee5.com/content/tvshow/{show_id}?translation=en&country=IN"

@@ -151,7 +151,7 @@ async def addurls_handler(bot, m: Message):
 
         elif "remove" in cmd:
             cmd.remove('remove')
-            notify_urls_cmd = cmd.strip()
+            notify_urls_cmd = cmd[0]
             await db.delete_notify_url(notify_urls_cmd)
             
         else:

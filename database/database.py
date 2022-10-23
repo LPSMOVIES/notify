@@ -1,5 +1,7 @@
 from config import DATABASE_NAME, DATABASE_URL, VOOT_API_URL, ZEE5_API_URL, BOT_USERNAME
 from motor.motor_asyncio import AsyncIOMotorClient
+import aiohttp
+
 
 class Database:
     def __init__(self, uri, database_name):
@@ -8,9 +10,12 @@ class Database:
         self.misc = self.db['misc']
         self.notify_urls = self.db['notify_urls']
 
-    def getApiUrl(self, url):
+    async def getApiUrl(self, url):
         show_id = url.split("/")[-1]
         if "voot.com" in url:
+            headers = {'Host': 'psapi.voot.com', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:106.0) Gecko/20100101 Firefox/106.0', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.5', 'Accept-Encoding': 'gzip, deflate, br', 'Referer': 'https://www.voot.com/', 'usertype': 'avod', 'Content-Version': 'V5', 'Origin': 'https://www.voot.com', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-GPC': '1', 'Connection': 'keep-alive'}
+            temp_url = "https://psapi.voot.com/jio/voot/v1/voot-web/content/generic/season-by-show?sort=season%3Adesc&id={}&responseType=common"
+            show_id = (await get_response(temp_url.format(show_id), headers=headers))["result"][0]["seasonId"]
             return VOOT_API_URL.format(show_id=show_id)
         elif "zee5.com" in url:
             return ZEE5_API_URL.format(show_id=show_id)
@@ -39,7 +44,7 @@ class Database:
                     "url": url,
                     "lang": lang,
                     "site": domain,
-                    "api_url":self.getApiUrl(url)
+                    "api_url":await self.getApiUrl(url)
                 }
                 await self.notify_urls.insert_one(res)
                 notify_url = await self.notify_urls.find_one({"url": url})
@@ -64,3 +69,9 @@ class Database:
         return self.notify_urls.find(dict)
         
 db = Database(DATABASE_URL, DATABASE_NAME)
+
+async def get_response(url, headers=None):
+    async with aiohttp.ClientSession(headers=headers) as session:
+        async with session.get(url, raise_for_status=True) as response:
+            data = await response.json()
+            return data
