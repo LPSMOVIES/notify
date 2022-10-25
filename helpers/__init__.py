@@ -62,17 +62,16 @@ Banned: {banned_status}
         subscription_date = expiry_date_str = time_remaining = "Expired"
 
     text = txt.format(
-        • user_id=user_id, 
+        user_id=user_id, 
+        subscription_date=subscription_date, 
 
-        • subscription_date=subscription_date, 
+        expiry_date=expiry_date_str, 
 
-        • expiry_date=expiry_date_str, 
+        time_remaining=human_time(time_remaining) if type(time_remaining) is int else time_remaining , 
 
-        • time_remaining=human_time(time_remaining) if type(time_remaining) is int else time_remaining , 
+        allowed_languages=" ".join(user["allowed_languages"]),
 
-        • allowed_languages=" ".join(user["allowed_languages"]),
-
-        • banned_status=user["banned"]
+        banned_status=user["banned"]
         )
     text = await translate(text, to_language=(await get_user(user_id))["lang"])
     return text
