@@ -140,7 +140,12 @@ async def addurls_handler(bot, m: Message):
         tdl += f"- `{content['url']}` - {content['lang']}\n"
     
     if len(m.command) == 1:
-        return await m.reply(Script.NOTIFY_URLS_LIST.format(tdl))
+        text = Script.NOTIFY_URLS_LIST.format(tdl)
+        n = 4000
+        splitted_text = [text[i:i+n] for i in range(0, len(text), n)]
+        for line in splitted_text:
+            return await m.reply(line)
+
     try:
         cmd = m.command
         cmd.remove('add_url')
