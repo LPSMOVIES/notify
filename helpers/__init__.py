@@ -13,7 +13,8 @@ class temp(object):
     SLEEP_TIME = None
     BANNED_USERS = []
     NOTIFY_URLS = [] # only links
-    ZEE5:list = {}
+    ZEE5:dict = {}
+    ZEE5 = {'0-6-4z5173773': '0-1-6z5237151', '0-6-4z5185799': '0-1-6z5236634'}
     COLORS:dict = {}
     LANG = {}
 

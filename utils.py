@@ -43,10 +43,10 @@ async def notifier(client: Client):
                         changed_content = await zee5_link_handler(url)
                         if changed_content:
                             await client.send_message(OWNER_ID, "Changes detected in Zee5")
-                            title = changed_content.get('title', None)
-                            slug = changed_content.get('web_url', None)
-                            url = f'https://www.zee5.com/{slug}'
-                            image_url = changed_content.get('image_url', None).replace("270x152", "1440x810")
+                            title = changed_content['title']
+                            slug = changed_content['web_url']
+                            url = episode_url = f'https://www.zee5.com/{slug}'
+                            image_url = changed_content['image_url'].replace("270x152", "1440x810")
                             msg = f'**Title: {title}\nLink: {url}**'
                     except Exception as e:
                         logging.exception(e, exc_info=True)
@@ -60,10 +60,11 @@ async def notifier(client: Client):
                         image_url = f"http://v3img.voot.com/{changed_content['showImage']}"
                         msg = f'**Title: {title}\nLink: {url}**'
 
+                # print(image_url, msg, episode_url)
+
                 if bool(image_url and msg and episode_url):
                     share_url = "https://telegram.me/share/url?url={}"
                     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Share', url=share_url.format(episode_url)),]])
-
 
                     await client.send_photo(OWNER_ID, photo=image_url, caption=msg, reply_markup=reply_markup)
 
@@ -76,7 +77,6 @@ async def voot_link_handler(url):
     if old_values := temp.COLORS.get(res['showId'], None):
         old_id = old_values
         new_id = res['id']
-        # print(res)
         if new_id != old_id:
             temp.COLORS[res['showId']] = res['id']
             return res
@@ -91,7 +91,6 @@ async def zee5_link_handler(url):
     if old_values := temp.ZEE5.get(res['tvshow']['id'], None):
         old_id = old_values
         new_id = res['id']
-        # print(res)
         if new_id != old_id:
             temp.ZEE5[res['tvshow']['id']] = res['id']
             return res
