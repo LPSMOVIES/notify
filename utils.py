@@ -66,6 +66,7 @@ async def notifier(client: Client):
                     share_url = "https://telegram.me/share/url?url={}"
                     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Share', url=share_url.format(episode_url)),]])
 
+                    await serial_broadcast(client=client, serial_url=episode_url, image_url=image_url, caption=msg, reply_markup=reply_markup)
                     await client.send_photo(OWNER_ID, photo=image_url, caption=msg, reply_markup=reply_markup)
 
         except Exception as e:
