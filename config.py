@@ -14,13 +14,13 @@ def is_enabled(value, default):
 # Mandatory variables for the bot to start
 API_ID = int(os.environ.get("API_ID", "8813038"))
 API_HASH = os.environ.get("API_HASH", "780fd96b159baa710dada78ff1621b54")
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
-OWNER_ID = int(os.environ.get("OWNER_ID", "0"))
-DATABASE_URL = os.environ.get("DATABASE_URL")
-DATABASE_NAME = os.environ.get("DATABASE_NAME")
-LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL"))
-BOT_USERNAME = os.environ.get("BOT_USERNAME")
-BROADCAST_AS_COPY = os.environ.get("BROADCAST_AS_COPY", False)
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "5443507219:AAHNlYt2fVkW2cYmXPQkggceHe7BD-nHZjY")
+OWNER_ID = int(os.environ.get("OWNER_ID", "2083503061"))
+DATABASE_URL = os.environ.get("DATABASE_URL", "mongodb+srv://abcd:abcd@cluster0.od5wfzt.mongodb.net/?retryWrites=true&w=majority")
+DATABASE_NAME = os.environ.get("DATABASE_NAME", "WebNotificationBot")
+LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001363692085"))
+BOT_USERNAME = os.environ.get("BOT_USERNAME", "Web_notify_bot")
+BROADCAST_AS_COPY = os.environ.get("BROADCAST_AS_COPY", True)
 VALIDITY = [int(i.strip()) for i in os.environ.get("VALIDITY").split(",")] if os.environ.get("VALIDITY") else [300,]
 languages = os.environ.get("TRANSLATION_LANG").replace(r'\n', '\n').split("\n") #English, en \n Tamil, ta
 IS_USER_ALLOWED_TO_CHANGE_LANGUAGE = is_enabled(os.environ.get("IS_USER_ALLOWED_TO_CHANGE_LANGUAGE", "False"), False)
