@@ -23,7 +23,7 @@ BOT_USERNAME = os.environ.get("BOT_USERNAME", "Web_notify_bot")
 BROADCAST_AS_COPY = os.environ.get("BROADCAST_AS_COPY", True)
 VALIDITY = [int(i.strip()) for i in os.environ.get("VALIDITY").split(",")] if os.environ.get("VALIDITY") else [300,]
 languages = os.environ.get("TRANSLATION_LANG").replace(r'\n', '\n').split("\n") #English, en \n Tamil, ta
-IS_USER_ALLOWED_TO_CHANGE_LANGUAGE = is_enabled(os.environ.get("IS_USER_ALLOWED_TO_CHANGE_LANGUAGE", "False"), False)
+IS_USER_ALLOWED_TO_CHANGE_LANGUAGE = is_enabled(os.environ.get("IS_USER_ALLOWED_TO_CHANGE_LANGUAGE", "True"), False)
 
 #  Replit Config
 REPLIT_USERNAME = os.environ.get("REPLIT_USERNAME", None)
