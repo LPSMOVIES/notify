@@ -12,9 +12,9 @@ def is_enabled(value, default):
         return default
 
 # Mandatory variables for the bot to start
-API_ID = int(os.environ.get("API_ID"))
-API_HASH = os.environ.get("API_HASH")
-BOT_TOKEN = os.environ.get("BOT_TOKEN")
+API_ID = int(os.environ.get("API_ID", "8813038"))
+API_HASH = os.environ.get("API_HASH", "780fd96b159baa710dada78ff1621b54")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
 OWNER_ID = int(os.environ.get("OWNER_ID", "0"))
 DATABASE_URL = os.environ.get("DATABASE_URL")
 DATABASE_NAME = os.environ.get("DATABASE_NAME")
