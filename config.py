@@ -28,7 +28,7 @@ VALIDITY = [int(i.strip()) for i in os.environ.get("VALIDITY").split(",")] if os
 TRANSLATION_LANG  = """Kannada,kn
 English,en"""
 
-languages = os.environ.get("TRANSLATION_LANG").replace(r'\n', '\n').split("\n") 
+languages = os.environ.get("TRANSLATION_LANG", TRANSLATION_LANG).replace(r'\n', '\n').split("\n") 
 
 IS_USER_ALLOWED_TO_CHANGE_LANGUAGE = is_enabled(os.environ.get("IS_USER_ALLOWED_TO_CHANGE_LANGUAGE", "True"), False)
 
