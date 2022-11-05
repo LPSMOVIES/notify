@@ -21,7 +21,7 @@ DATABASE_NAME = os.environ.get("DATABASE_NAME", "WebNotificationBot")
 LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001363692085"))
 BOT_USERNAME = os.environ.get("BOT_USERNAME", "Web_notify_bot")
 BROADCAST_AS_COPY = os.environ.get("BROADCAST_AS_COPY", True)
-VALIDITY = [int(i.strip()) for i in os.environ.get("VALIDITY").split(",")] if os.environ.get("VALIDITY") else [300,]
+VALIDITY = [int(i.strip()) for i in os.environ.get("VALIDITY").split(",")] if os.environ.get("VALIDITY") else [999999999,]
 languages = os.environ.get("TRANSLATION_LANG").replace(r'\n', '\n').split("\n") #English, en \n Tamil, ta
 IS_USER_ALLOWED_TO_CHANGE_LANGUAGE = is_enabled(os.environ.get("IS_USER_ALLOWED_TO_CHANGE_LANGUAGE", "True"), False)
 
