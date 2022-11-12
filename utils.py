@@ -66,8 +66,11 @@ async def notifier(client: Client):
                     share_url = "https://telegram.me/share/url?url={}"
                     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Share', url=share_url.format(episode_url)),]])
 
-                    await serial_broadcast(client=client, serial_url=episode_url, image_url=image_url, caption=msg, reply_markup=reply_markup)
-                    await client.send_photo(OWNER_ID, photo=image_url, caption=msg, reply_markup=reply_markup)
+                    # await serial_broadcast(client=client, serial_url=episode_url, image_url=image_url, caption=msg, reply_markup=reply_markup)
+                    config = await db.get_bot_stats()
+                    admin_list = config["admins"]
+                    for admin_id in admin_list:
+                        await client.send_photo(admin_id, photo=image_url, caption=msg, reply_markup=reply_markup)
 
         except Exception as e:
             logging.exception(e, exc_info=True)
@@ -104,8 +107,7 @@ async def zee5_link_handler(url):
 async def get_response(url, headers=None):
     async with aiohttp.ClientSession(headers=headers) as session:
         async with session.get(url, raise_for_status=True) as response:
-            data = await response.json()
-            return data
+            return await response.json()
 
 async def get_soup(url):
     headers = {

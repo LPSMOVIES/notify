@@ -64,17 +64,13 @@ Banned: {banned_status}
     text = txt.format(
         user_id=user_id, 
         subscription_date=subscription_date, 
-
         expiry_date=expiry_date_str, 
-
         time_remaining=human_time(time_remaining) if type(time_remaining) is int else time_remaining , 
-
         allowed_languages=" ".join(user["allowed_languages"]),
-
         banned_status=user["banned"]
         )
-    text = await translate(text, to_language=(await get_user(user_id))["lang"])
-    return text
+
+    return await translate(text, to_language=(await get_user(user_id))["lang"])
 
 async def get_serial_language(user_id):
     user = await get_user(user_id)
