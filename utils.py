@@ -46,9 +46,9 @@ async def notifier(client: Client):
                             await client.send_message(OWNER_ID, "Changes detected in Zee5")
                             title = changed_content['title']
                             slug = changed_content['web_url']
-                            url = episode_url = f'https://www.zee5.com/{slug}'
+                            _url = episode_url = f'https://www.zee5.com/{slug}'
                             image_url = changed_content['image_url'].replace("270x152", "1440x810")
-                            msg = f'**Title: {title}\nLink: {url}**'
+                            msg = f'**Title: {title}\nLink: {_url}**'
                     except Exception as e:
                         logging.exception(e, exc_info=True)
 
@@ -57,9 +57,9 @@ async def notifier(client: Client):
                     if changed_content:
                         await client.send_message(OWNER_ID, "Changes detected in Voot")
                         title = changed_content['fullTitle']
-                        url = episode_url = changed_content['slug']
+                        _url = episode_url = changed_content['slug']
                         image_url = f"http://v3img.voot.com/{changed_content['showImage']}"
-                        msg = f'**Title: {title}\nLink: {url}**'
+                        msg = f'**Title: {title}\nLink: {_url}**'
 
 
                 elif "hotstar.com" in url:
@@ -68,19 +68,19 @@ async def notifier(client: Client):
                         await client.send_message(OWNER_ID, "Changes detected in Hotstar")
                         title = changed_content['title']
                         show_name:str = slugify(changed_content["showName"])
-                        url = episode_url = f"https://www.hotstar.com/in/tv/{show_name}/{changed_content['showContentId']}/{changed_content['contentId']}"
+                        _url = episode_url = f"https://www.hotstar.com/in/tv/{show_name}/{changed_content['showContentId']}/{changed_content['contentId']}"
                         image_url = f"https://img1.hotstarext.com/image/upload/{changed_content['images']['h']}"
-                        msg = f'**Title: {title}\nLink: {url}**'
+                        msg = f'**Title: {title}\nLink: {_url}**'
 
                 if bool(image_url and msg and episode_url):
                     share_url = "https://telegram.me/share/url?url={}"
                     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Share', url=share_url.format(episode_url)),]])
 
-                    # await serial_broadcast(client=client, serial_url=episode_url, image_url=image_url, caption=msg, reply_markup=reply_markup)
+                    await serial_broadcast(client=client, serial_url=url, image_url=image_url, caption=msg, reply_markup=reply_markup)
                     admin_list = temp.ADMINS_LIST
                     # await client.send_photo(OWNER_ID, photo=image_url, caption=msg, reply_markup=reply_markup)
-                    for admin_id in admin_list:
-                        await client.send_photo(admin_id, photo=image_url, caption=msg, reply_markup=reply_markup)
+                    # for admin_id in admin_list:
+                    #     await client.send_photo(admin_id, photo=image_url, caption=msg, reply_markup=reply_markup)
 
         except Exception as e:
             logging.exception(e, exc_info=True)
@@ -148,7 +148,7 @@ async def get_soup(url):
 async def serial_broadcast(client: Client, serial_url, image_url, caption, reply_markup=None):
     users = await filter_users({"has_access":True, "banned":False})
     async for user in users:
-        notify_url = await db.filter_notify_url({"url": serial_url})
+        notify_url = await db.filter_notify_url({"api_url": serial_url})
         async for url in notify_url:
             if url["lang"] in user["allowed_languages"]:
                 try:

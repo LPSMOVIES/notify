@@ -71,10 +71,10 @@ class Database:
     async def filter_notify_url(self, dict):
         return self.notify_urls.find(dict)
         
+
 db = Database(DATABASE_URL, DATABASE_NAME)
 
 async def get_response(url, headers=None):
     async with aiohttp.ClientSession(headers=headers) as session:
         async with session.get(url, raise_for_status=True) as response:
-            data = await response.json()
-            return data
+            return await response.json()
