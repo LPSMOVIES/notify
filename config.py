@@ -40,3 +40,4 @@ PING_INTERVAL = int(os.environ.get("PING_INTERVAL", "300"))
 
 VOOT_API_URL = "https://psapi.voot.com/jio/voot/v1/voot-web/content/generic/series-wise-episode?sort=episode%3Adesc&id={show_id}&responseType=common"
 ZEE5_API_URL = "https://gwapi.zee5.com/content/tvshow/{show_id}?translation=en&country=IN"
+HOTSTAR_API_URL = "https://api.hotstar.com/o/v1/show/detail?contentId={show_id}"

@@ -1,4 +1,4 @@
-from config import DATABASE_NAME, DATABASE_URL, VOOT_API_URL, ZEE5_API_URL, BOT_USERNAME
+from config import DATABASE_NAME, DATABASE_URL, HOTSTAR_API_URL, VOOT_API_URL, ZEE5_API_URL, BOT_USERNAME
 from motor.motor_asyncio import AsyncIOMotorClient
 import aiohttp
 
@@ -19,6 +19,9 @@ class Database:
             return VOOT_API_URL.format(show_id=show_id)
         elif "zee5.com" in url:
             return ZEE5_API_URL.format(show_id=show_id)
+
+        elif "hotstar.com" in url:
+            return HOTSTAR_API_URL.format(show_id=show_id)
 
     async def get_bot_stats(self):
         return await self.misc.find_one({"bot": BOT_USERNAME})

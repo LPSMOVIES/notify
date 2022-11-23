@@ -8,3 +8,4 @@ aiofiles
 translators
 motor==2.5.1
 pymongo[srv]==3.12.3
+python-slugify

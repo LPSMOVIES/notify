@@ -10,6 +10,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import logging.config
 from database.users import filter_users
 from database import db
+from slugify import slugify
 
 from helpers import temp
 logging.getLogger().setLevel(logging.INFO)
@@ -60,15 +61,24 @@ async def notifier(client: Client):
                         image_url = f"http://v3img.voot.com/{changed_content['showImage']}"
                         msg = f'**Title: {title}\nLink: {url}**'
 
-                # print(image_url, msg, episode_url)
+
+                elif "hotstar.com" in url:
+                    changed_content = await hotstar_link_handler(url)
+                    if changed_content:
+                        await client.send_message(OWNER_ID, "Changes detected in Hotstar")
+                        title = changed_content['title']
+                        show_name:str = slugify(changed_content["showName"])
+                        url = episode_url = f"https://www.hotstar.com/in/tv/{show_name}/{changed_content['showContentId']}/{changed_content['contentId']}"
+                        image_url = f"https://img1.hotstarext.com/image/upload/{changed_content['images']['h']}"
+                        msg = f'**Title: {title}\nLink: {url}**'
 
                 if bool(image_url and msg and episode_url):
                     share_url = "https://telegram.me/share/url?url={}"
                     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Share', url=share_url.format(episode_url)),]])
 
                     # await serial_broadcast(client=client, serial_url=episode_url, image_url=image_url, caption=msg, reply_markup=reply_markup)
-                    config = await db.get_bot_stats()
-                    admin_list = config["admins"]
+                    admin_list = temp.ADMINS_LIST
+                    # await client.send_photo(OWNER_ID, photo=image_url, caption=msg, reply_markup=reply_markup)
                     for admin_id in admin_list:
                         await client.send_photo(admin_id, photo=image_url, caption=msg, reply_markup=reply_markup)
 
@@ -103,7 +113,25 @@ async def zee5_link_handler(url):
     else:
         temp.ZEE5[res['tvshow']['id']] = res['id']
     return []
-    
+
+async def hotstar_link_handler(url):
+    try:
+        headers= {'User-Agent': ' Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:107.0) Gecko/20100101 Firefox/107.0', 'Accept': ' */*', 'Accept-Language': ' eng', 'Accept-Encoding': ' gzip, deflate, br', 'Referer': ' https://www.hotstar.com/', 'x-country-code': ' IN', 'x-platform-code': ' PCTV', 'x-client-code': ' LR', 'hotstarauth': ' st=1669222094~exp=1669228094~acl=/*~hmac=47eefd6950b2da45cfddeaba7db97cf32767ab1fa60cf17a96546a021c00909b', 'x-hs-usertoken': ' eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ1bV9hY2Nlc3MiLCJleHAiOjE2Njk2MzY0NzMsImlhdCI6MTY2OTAzMTY3MywiaXNzIjoiVFMiLCJqdGkiOiIwYTkwYThlMGNmODE0YWQ1OWU5ODU4NzYzZjExYWNlZiIsInN1YiI6IntcImhJZFwiOlwiODk2MTU0NDVmZmVkNDVlM2FiYzY4NjFiZWIxMjAxZWZcIixcInBJZFwiOlwiMzQwNDBhN2E4MmRmNDJmN2EzM2MxMTBmZmM5ZjIyMmFcIixcIm5hbWVcIjpcIkd1ZXN0IFVzZXJcIixcImlwXCI6XCIxMTAuNDQuMTAuMjA0XCIsXCJjb3VudHJ5Q29kZVwiOlwiaW5cIixcImN1c3RvbWVyVHlwZVwiOlwibnVcIixcInR5cGVcIjpcImd1ZXN0XCIsXCJpc0VtYWlsVmVyaWZpZWRcIjpmYWxzZSxcImlzUGhvbmVWZXJpZmllZFwiOmZhbHNlLFwiZGV2aWNlSWRcIjpcIjg3M2ZkOGFjLWI2MzctNDAyNy04ZjMwLTc1NTZkMjhhZGMyMFwiLFwicHJvZmlsZVwiOlwiQURVTFRcIixcInZlcnNpb25cIjpcInYyXCIsXCJzdWJzY3JpcHRpb25zXCI6e1wiaW5cIjp7fX0sXCJpc3N1ZWRBdFwiOjE2NjkwMzE2NzM0MjN9IiwidmVyc2lvbiI6IjFfMCJ9.9WzjEvitAecX2qOct9gvSM-T7mimFymo3b-D7_C2_pM', 'Origin': ' https://www.hotstar.com', 'Connection': ' keep-alive', 'Sec-Fetch-Dest': ' empty', 'Sec-Fetch-Mode': ' cors', 'Sec-Fetch-Site': ' same-site', 'Sec-GPC': ' 1', 'TE': ' trailers'}
+        res = (await get_response(url, headers=headers))["body"]["results"]['trays']["items"][0]["assets"]["items"][0]
+        if old_values := temp.HOTSTAR.get(res['showContentId'], None):
+            old_id = old_values
+            new_id = res['contentId']
+            if new_id != old_id:
+                temp.HOTSTAR[res['showContentId']] = res['contentId']
+                return res
+            else:
+                temp.HOTSTAR[res['showContentId']] = new_id
+        else:
+            temp.HOTSTAR[res['showContentId']] = res['contentId']
+        return []
+    except Exception as e:
+        print(e)
+        
 async def get_response(url, headers=None):
     async with aiohttp.ClientSession(headers=headers) as session:
         async with session.get(url, raise_for_status=True) as response:

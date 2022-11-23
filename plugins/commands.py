@@ -132,18 +132,20 @@ async def banneduser_handler(bot, m: Message):
 
 @Client.on_message(filters.command('add_url') & filters.private)
 async def addurls_handler(bot, m: Message):
+
     if m.from_user.id not in temp.ADMINS_LIST:
         return
+
     config = await db.filter_notify_url({})
     tdl = ""
     async for content in config:
-        tdl += f"- `{content['url']}` - {content['lang']}\n"
+        tdl += f"- `{content['url']}` - {content['lang']}\n\n"
         if len(tdl) > 4000 and len(m.command) == 1:
             await m.reply(tdl)
             tdl = ""
 
     if len(m.command) == 1:
-        return
+        return await m.reply(tdl)
     
     try:
         cmd = m.command
