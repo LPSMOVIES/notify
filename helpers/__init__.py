@@ -16,7 +16,7 @@ class temp(object):
     ZEE5:dict = {}
     # ZEE5 = {'0-6-4z5173773': '0-1-6z5237151', '0-6-4z5185799': '0-1-6z5236634'}
     COLORS:dict = {}
-    HOTSTAR:dict = {'1260026801': 100083286} #{'1260026801': 100083286} 
+    HOTSTAR:dict = {} #{'1260026801': 100083286} 
     LANG = {}
 
 async def translate(text, from_language='en', to_language=None):  
