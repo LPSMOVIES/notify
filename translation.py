@@ -38,18 +38,23 @@ To remove all urls,
 Ex: `/add_url remove_all`
 """
 
-    SUBSCRIPTION_REMINDER_MESSAGE = """Your subscription is gonna end soon. 
+    SUBSCRIPTION_REMINDER_MESSAGE = """**Your subscription is gonna end soon. 
     
-Renew your subscription to continue this service:
+Renew your subscription to continue this service contact @CR_0O0:
 
 Details:
 User ID: {user_id}
+
 Subscription Date: {subscription_date}
+
 Expiry Date: {expiry_date}
+
 Subscription Peroid Remaining: {time_remaining}
+
 Allowed Languages: {allowed_languages}
+
 Banned: {banned_status}
-"""
+**"""
 
     HELP_REPLY_MARKUP = InlineKeyboardMarkup([
         [
