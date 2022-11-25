@@ -33,7 +33,7 @@ async def ping_server():
 async def notifier(client: Client):
     sleep_time = temp.SLEEP_TIME
     while True:
-        print(temp.HOTSTAR)
+        print(f"Hostar {temp.HOTSTAR}")
         await asyncio.sleep(sleep_time)
         try:
             for url in temp.NOTIFY_URLS:
