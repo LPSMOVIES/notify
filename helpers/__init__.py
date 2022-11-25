@@ -23,7 +23,7 @@ async def translate(text, from_language='en', to_language=None):
     return ts.google(text, from_language=from_language, to_language=to_language) if to_language != from_language else text
 
 def user_allowed_langauage(user, lang):
-    return f"Allow {lang} ✅" if lang not in user['allowed_languages'] else f"Disallow {lang} ❌"
+    return f"Allow {lang} ❌️" if lang not in user['allowed_languages'] else f"Disallow {lang} ✅️"
 
 async def get_user_info_button(user_id):
     user = await get_user(user_id)
@@ -45,13 +45,18 @@ def listToString(s):
 
 
 async def get_user_info_text(user_id):
-    txt = """User ID: {user_id}
-Subscription Date: {subscription_date}
-Expiry Date: {expiry_date}
-Subscription Peroid Remaining: {time_remaining}
-Allowed Languages: {allowed_languages}
-Banned: {banned_status}
-    """
+    txt = """**User ID:** `{user_id}`
+
+**Subscription Date:** `{subscription_date}`
+
+**Expiry Date:** `{expiry_date}`
+
+**Subscription Peroid Remaining:** `{time_remaining}`
+
+Allowed Languages: `{allowed_languages}`
+
+**Banned:** `{banned_status}`
+    **"""
 
     user = await get_user(user_id)
     btn = await get_user_info_button(user_id)
@@ -83,6 +88,6 @@ async def get_serial_language(user_id):
 
     btn = [[InlineKeyboardButton(text=f"{user_allowed_langauage(user, serial_lang)}", callback_data=f'allowlang#{user_id}#{serial_lang}#serial_lang')] for serial_lang in avl_serial_lang]
     btn.append([InlineKeyboardButton("Close", callback_data="delete")])
-    symbol = "✅" if IS_USER_ALLOWED_TO_CHANGE_LANGUAGE else "❌"
+    symbol = "❌️" if IS_USER_ALLOWED_TO_CHANGE_LANGUAGE else "✅️"
     text = f'Selected Serial Languages: {" ".join(user["allowed_languages"])} {symbol}'
     return text, btn
