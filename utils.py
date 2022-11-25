@@ -77,8 +77,9 @@ async def notifier(client: Client):
                     share_url = "https://telegram.me/share/url?url={}"
                     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Share', url=share_url.format(episode_url)),]])
 
-                    await serial_broadcast(client=client, serial_url=url, image_url=image_url, caption=msg, reply_markup=reply_markup)
-                    admin_list = temp.ADMINS_LIST
+                    if episode_url not in temp.DONE_URLS:
+                        await serial_broadcast(client=client, serial_url=url, image_url=image_url, caption=msg, reply_markup=reply_markup)
+                        temp.DONE_URLS.append(episode_url)
                     # await client.send_photo(OWNER_ID, photo=image_url, caption=msg, reply_markup=reply_markup)
                     # for admin_id in admin_list:
                     #     await client.send_photo(admin_id, photo=image_url, caption=msg, reply_markup=reply_markup)
@@ -126,6 +127,7 @@ async def hotstar_link_handler(url):
         except KeyError:
             res = org_res["body"]["results"]["trays"]["items"][1]["assets"]["items"][0]
 
+        res['showContentId'], res['contentId'] = int(res['showContentId']), int(res['contentId'])
         if old_values := temp.HOTSTAR.get(res['showContentId'], None):
             old_id = old_values
             new_id = res['contentId']

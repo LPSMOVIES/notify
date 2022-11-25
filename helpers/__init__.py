@@ -18,6 +18,7 @@ class temp(object):
     COLORS:dict = {}
     HOTSTAR:dict = {} #{'1260026801': 100083286} 
     LANG = {}
+    DONE_URLS = []
 
 async def translate(text, from_language='en', to_language=None):  
     return ts.google(text, from_language=from_language, to_language=to_language) if to_language != from_language else text
