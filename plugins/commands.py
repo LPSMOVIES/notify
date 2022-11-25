@@ -17,7 +17,7 @@ async def start(bot: Client, cmd: Message):
     if not is_user and LOG_CHANNEL: await bot.send_message(LOG_CHANNEL, f"#NewUser\n\nUser ID: `{cmd.from_user.id}`\nName: {cmd.from_user.mention}")
     user = await get_user(cmd.from_user.id)
     text = await translate(Script.START_MESSAGE, to_language=user['lang'])
-    return await txt.edit(text, reply_markup=Script.HELP_REPLY_MARKUP)
+    return await txt.edit(text, reply_markup=Script.HELP_REPLY_MARKUP, disable_web_page_preview=True)
 
 @Client.on_message(filters.command("help") & filters.private)
 async def help(bot: Client, cmd):
