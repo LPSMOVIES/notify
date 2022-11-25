@@ -14,7 +14,7 @@ def is_enabled(value, default):
 # Mandatory variables for the bot to start
 API_ID = int(os.environ.get("API_ID", "8813038"))
 API_HASH = os.environ.get("API_HASH", "780fd96b159baa710dada78ff1621b54")
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "5443507219:AAHNlYt2fVkW2cYmXPQkggceHe7BD-nHZjY")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "5443507219:AAHJeqjaKB38jMMRsklsLYxvYbAYKfKf5e4")
 OWNER_ID = int(os.environ.get("OWNER_ID", "2083503061"))
 DATABASE_URL = os.environ.get("DATABASE_URL", "mongodb+srv://abcd:abcd@cluster0.cii4jll.mongodb.net/?retryWrites=true&w=majority")
 DATABASE_NAME = os.environ.get("DATABASE_NAME", "WebNotificationBot")
