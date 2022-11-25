@@ -56,7 +56,7 @@ async def get_user_info_text(user_id):
 Allowed Languages: `{allowed_languages}`
 
 **Banned:** `{banned_status}`
-    **"""
+    """
 
     user = await get_user(user_id)
     btn = await get_user_info_button(user_id)
