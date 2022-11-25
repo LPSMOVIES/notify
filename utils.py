@@ -122,9 +122,10 @@ async def hotstar_link_handler(url):
         res = org_res =  (await get_response(url, headers=headers))["body"]["results"]['trays']
     
         res = res["items"][0]
+
         try:
             res=res["assets"]["items"][0]
-        except Exception as e:
+        except KeyError:
             print(org_res)
 
         if old_values := temp.HOTSTAR.get(res['showContentId'], None):
