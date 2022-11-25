@@ -122,7 +122,7 @@ async def hotstar_link_handler(url):
         res = (await get_response(url, headers=headers))["body"]["results"]['trays']
     
         res = res["items"][0]
-        res=["assets"]["items"][0]
+        res=res["assets"]["items"][0]
 
         if old_values := temp.HOTSTAR.get(res['showContentId'], None):
             old_id = old_values
