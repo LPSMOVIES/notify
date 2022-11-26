@@ -44,7 +44,7 @@ async def notifier(client: Client):
                     try:
                         changed_content = await zee5_link_handler(url)
                         if changed_content:
-                            await client.send_message(OWNER_ID, "Changes detected in Zee5")
+                            # await client.send_message(OWNER_ID, "Changes detected in Zee5")
                             title = changed_content['title']
                             slug = changed_content['web_url']
                             _url = episode_url = f'https://www.zee5.com/{slug}'
@@ -56,7 +56,7 @@ async def notifier(client: Client):
                 elif "voot.com" in url:
                     changed_content = await voot_link_handler(url)
                     if changed_content:
-                        await client.send_message(OWNER_ID, "Changes detected in Voot")
+                        # await client.send_message(OWNER_ID, "Changes detected in Voot")
                         title = changed_content['fullTitle']
                         _url = episode_url = changed_content['slug']
                         image_url = f"http://v3img.voot.com/{changed_content['showImage']}"
@@ -66,7 +66,7 @@ async def notifier(client: Client):
                 elif "hotstar.com" in url:
                     changed_content = await hotstar_link_handler(url)
                     if changed_content:
-                        await client.send_message(OWNER_ID, "Changes detected in Hotstar")
+                        # await client.send_message(OWNER_ID, "Changes detected in Hotstar")
                         title = changed_content['title']
                         show_name:str = slugify(changed_content["showName"])
                         _url = episode_url = f"https://www.hotstar.com/in/tv/{show_name}/{changed_content['showContentId']}/{changed_content['contentId']}"
