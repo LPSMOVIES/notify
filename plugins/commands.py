@@ -10,6 +10,7 @@ from database import db
 from urllib.parse import urlparse
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+
 @Client.on_message(filters.command("start") & filters.private)
 async def start(bot: Client, cmd: Message):
     txt = await cmd.reply("`Processing...`")
@@ -18,6 +19,7 @@ async def start(bot: Client, cmd: Message):
     user = await get_user(cmd.from_user.id)
     text = await translate(Script.START_MESSAGE, to_language=user['lang'])
     return await txt.edit(text, reply_markup=Script.HELP_REPLY_MARKUP, disable_web_page_preview=True)
+
 
 @Client.on_message(filters.command("help") & filters.private)
 async def help(bot: Client, cmd):
@@ -196,7 +198,7 @@ async def lang_cmd_handler(bot, m: Message):
 async def info_cmd_handler(bot, m: Message):
     if len(m.command) == 1 and m.from_user.id in temp.ADMINS_LIST:
         return await m.reply_text("`/myplan id`")
-    user_id = m.command[1] if m.from_user.id in temp.ADMINS_LIST else m.from_user.id
+    user_id = int(m.command[1]) if m.from_user.id in temp.ADMINS_LIST else m.from_user.id
     
     btn = await get_user_info_button(user_id)
     text = await get_user_info_text(user_id)
