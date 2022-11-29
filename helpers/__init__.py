@@ -61,7 +61,7 @@ Allowed Languages: `{allowed_languages}`
 
     user = await get_user(user_id)
     btn = await get_user_info_button(user_id)
-    expiry_date_str, time_remaining = await expiry_date(user_id)
+    expiry_date_str, time_remaining = await expiry_date(user_id) 
     subscription_date = user['last_verified'] if user["has_access"] else None
 
     if user["has_access"] == False or not await is_user_verified(user_id):

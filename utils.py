@@ -8,7 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import logging.config
-from database.users import filter_users
+from database.users import filter_users, is_user_verified
 from database import db
 from slugify import slugify
 
@@ -158,10 +158,11 @@ async def get_soup(url):
 async def serial_broadcast(client: Client, serial_url, image_url, caption, reply_markup=None):
     users = await filter_users({"has_access":True, "banned":False})
     async for user in users:
-        notify_url = await db.filter_notify_url({"api_url": serial_url})
-        async for url in notify_url:
-            if url["lang"] in user["allowed_languages"]:
-                try:
-                    await client.send_photo(user['user_id'], image_url, caption, reply_markup=reply_markup)
-                except Exception as e:
-                    print(e)
+        if not await is_user_verified(user['user_id']):
+            notify_url = await db.filter_notify_url({"api_url": serial_url})
+            async for url in notify_url:
+                if url["lang"] in user["allowed_languages"]:
+                    try:
+                        await client.send_photo(user['user_id'], image_url, caption, reply_markup=reply_markup)
+                    except Exception as e:
+                        print(e)
