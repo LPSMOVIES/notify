@@ -25,8 +25,7 @@ VALIDITY = [int(i.strip()) for i in os.environ.get("VALIDITY").split(",")] if os
 #languages = os.environ.get("TRANSLATION_LANG").replace(r'\n', '\n').split("\n") 
 #English, en \n Tamil, ta
 
-TRANSLATION_LANG  = """Kannada,kn
-English,en"""
+TRANSLATION_LANG  = """English,en"""
 
 languages = os.environ.get("TRANSLATION_LANG", TRANSLATION_LANG).replace(r'\n', '\n').split("\n") 
 
