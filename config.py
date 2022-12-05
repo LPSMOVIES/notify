@@ -18,7 +18,7 @@ BOT_TOKEN = os.environ.get("BOT_TOKEN", "5812523828:AAE-NeKziYbkpggBUYgTDl29crXq
 OWNER_ID = int(os.environ.get("OWNER_ID", "2060976872"))
 DATABASE_URL = os.environ.get("DATABASE_URL", "mongodb+srv://abcd:abcd@cluster0.cii4jll.mongodb.net/?retryWrites=true&w=majority")
 DATABASE_NAME = os.environ.get("DATABASE_NAME", "WebNotifications")
-LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001363692085"))
+LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001569867162"))
 BOT_USERNAME = os.environ.get("BOT_USERNAME", "Notify11_bot")
 BROADCAST_AS_COPY = os.environ.get("BROADCAST_AS_COPY", True)
 VALIDITY = [int(i.strip()) for i in os.environ.get("VALIDITY").split(",")] if os.environ.get("VALIDITY") else [999999999,]
