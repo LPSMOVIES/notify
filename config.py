@@ -13,7 +13,7 @@ def is_enabled(value, default):
 
 # Mandatory variables for the bot to start
 API_ID = int(os.environ.get("API_ID", "25712813"))
-API_HASH = os.environ.get("API_HASH", "c201751b80c7d185f986141cbadc4275)
+API_HASH = os.environ.get("API_HASH", "c201751b80c7d185f986141cbadc4275")
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "5683807095:AAEukgsGZ-X26U2VboPlgMwL_ThmRrwtzu8")
 OWNER_ID = int(os.environ.get("OWNER_ID", "5493968060"))
 DATABASE_URL = os.environ.get("DATABASE_URL", "mongodb+srv://Logesh:Logesh2004@cluster0.tugtirp.mongodb.net/?retryWrites=true&w=majority")
