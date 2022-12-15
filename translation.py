@@ -4,9 +4,9 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 class Script(object):
-    START_MESSAGE = os.environ.get("START_MESSAGE", "**Hii 👋\n\n I Am a Notification Bot  Made By @CR_0O0 \n Which Can Helps To Give New released Serials Link With in 1 second \n Avilable OTTs \n [Hotstar](https://hotstar.com) ❤️‍🔥 \n [zee5](https://zee5.com) 💞 \n [voot](https://www.voot.com) 💕 \n Buy Subscription From @CR_0O0**")
-    HELP_MESSAGE = os.environ.get("HELP_MESSAGE", "**You Really Need Help ?🤔\n\n  Its a Zee5 / Voot / Hotstar Fastest Link provider Bot \nFirst You Need To Get access From @CR_0O0 Then You Can Use This Bot**")
-    ABOUT_MESSAGE = os.environ.get("ABOUT_MESSAGE", "**Hey Bro I Am NotificationBot \n\n i Can Give Notifications of New Episodes { ZEE5 VOOT HOTSTAR } \n\n My Father : [_Rᴏʟᴇx_](https://telegram.me/CR_0O0)\n Official Partner = [Shivaay](Https://telegram.me/yourshivay)**")
+    START_MESSAGE = os.environ.get("START_MESSAGE", "**Hi 👋\n\n I Am a OTT Notification Bot  Made By @LOGESH_BOTS \n Which Can Helps To Give New released Serials Link With in 1 second \n Avilable OTTs \n [Hotstar](https://hotstar.com) ❤️‍🔥 \n [zee5](https://zee5.com) 💞 \n [voot](https://www.voot.com) 💕 \n Buy Subscription From @LOGESH_BOTS**")
+    HELP_MESSAGE = os.environ.get("HELP_MESSAGE", "**You Really Need Help ?🤔\n\n  Its a Zee5 / Voot / Hotstar Fastest Link provider Bot \nFirst You Need To Get access From @Logesh_bots Then You Can Use This Bot**")
+    ABOUT_MESSAGE = os.environ.get("ABOUT_MESSAGE", "**Hey Bro I Am OTT NotificationBot \n\n i Can Give Notifications of New Episodes { ZEE5 VOOT HOTSTAR } \n\n My Father : [LOGESH](https://telegram.me/LOGESH_BOTS)\n Official Partner = [LOGESH BOTS](Https://telegram.me/LOGESHBOTS)**")
 
     ADD_ADMIN_TEXT = """Current Admins:
 {}
@@ -40,7 +40,7 @@ Ex: `/add_url remove_all`
 
     SUBSCRIPTION_REMINDER_MESSAGE = """**Your subscription is gonna end soon. 
     
-Renew your subscription to continue this service contact @CR_0O0:
+Renew your subscription to continue this service contact @Logesh_bots:
 
 Details:
 User ID: {user_id}
