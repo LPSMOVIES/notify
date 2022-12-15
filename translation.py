@@ -4,7 +4,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 class Script(object):
-    START_MESSAGE = os.environ.get("START_MESSAGE", "**Hi 👋\n\n I Am a OTT Notification Bot  Made By @LOGESH_BOTS \n Which Can Helps To Give New released Serials Link With in 1 second \n Avilable OTTs \n [Hotstar](https://hotstar.com) ❤️‍🔥 \n [zee5](https://zee5.com) 💞 \n [voot](https://www.voot.com) 💕 \n Buy Subscription From @LOGESH_BOTS**")
+    START_MESSAGE = os.environ.get("START_MESSAGE", "**Hi 👋\n\n  I am OTT Notification Bot. Doing the Amazing work of Providing links of Shows within seconds . Only Premium Users can Use me , So buy Subscription  From @LOGESH_BOTS** \n\n Powered by - @LOGESHBOTS")
     HELP_MESSAGE = os.environ.get("HELP_MESSAGE", "**You Really Need Help ?🤔\n\n  Its a Zee5 / Voot / Hotstar Fastest Link provider Bot \nFirst You Need To Get access From @Logesh_bots Then You Can Use This Bot**")
     ABOUT_MESSAGE = os.environ.get("ABOUT_MESSAGE", "**Hey Bro I Am OTT NotificationBot \n\n i Can Give Notifications of New Episodes { ZEE5 VOOT HOTSTAR } \n\n My Father : [LOGESH](https://telegram.me/LOGESH_BOTS)\n Official Partner = [LOGESH BOTS](Https://telegram.me/LOGESHBOTS)**")
 
